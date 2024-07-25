@@ -1,45 +1,81 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import React from 'react';
+import { Button, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; 
+import { useDispatch } from 'react-redux';
+import { clearUser } from '../feautures/user/userSlice';
 
 const HomeScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(clearUser());
+    navigation.navigate('Login');
+  }
     return (
         <View style={styles.container}>
-          <Text style={styles.title}>Bienvenido a la aplicación de mensajería</Text>
-          <Button
-            title="Ir al Chat"
-            onPress={() => navigation.navigate('Chat')}
-            style={styles.button}
-          />
-          <Button
-            title="Perfil"
-            onPress={() => navigation.navigate('Profile')}
-            style={styles.button}
-          />
-          <Button
-            title="Configuración"
-            onPress={() => navigation.navigate('Settings')}
-            style={styles.button}
-          />
+            <Text style={styles.title}>EchoChat</Text>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Chat')}
+            >
+                <Ionicons name="chatbubbles-outline" size={24} color="white" />
+                <Text style={styles.buttonText}>Ir al Chat</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Profile')}
+            >
+                <Ionicons name="person-outline" size={24} color="white" />
+                <Text style={styles.buttonText}>Perfil</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Settings')}
+            >
+                <Ionicons name="settings-outline" size={24} color="white" />
+                <Text style={styles.buttonText}>Configuración</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleLogout()}
+            >
+                <Ionicons name="settings-outline" size={24} color="white" />
+                <Text style={styles.buttonText}>Cerrar Sesión</Text>
+            </TouchableOpacity>
         </View>
-      );
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f5f5f5',
+        padding: 20,
     },
     title: {
-      fontSize: 24,
-      marginBottom: 20,
+        fontSize: 28,
+        marginBottom: 20,
+        fontWeight: 'bold',
+        color: '#333',
     },
     button: {
-      marginTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#6200ea',
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        borderRadius: 8,
+        marginVertical: 10,
+        width: '100%',
+        justifyContent: 'center',
     },
     buttonText: {
-      fontSize: 18,
-      fontWeight: 'bold',
-    }
-  });
+        fontSize: 18,
+        color: 'white',
+        marginLeft: 10,
+    },
+});
 
-export default HomeScreen
+export default HomeScreen;
