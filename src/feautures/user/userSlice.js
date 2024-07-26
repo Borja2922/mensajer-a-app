@@ -7,6 +7,9 @@ const userSlice = createSlice({
         setUser: (state, action) => {
             return action.payload;
         },
+        setChatUsers: (state, action) => {
+            state.chatUsers = action.payload;
+        },
         setDescription: (state, action) => {
             state.description = action.payload;
         },
@@ -19,6 +22,6 @@ const userSlice = createSlice({
     },
 })
 
-export const { setUser, setDescription, clearUser } = userSlice.actions;
+export const { setUser, setDescription, setProfileImage, setChatUsers, clearUser } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,51 +1,42 @@
-import { useState } from "react";
-import { Button, StyleSheet, TextInput, View } from "react-native";
-import { useDispatch } from "react-redux";
-import { addMessage } from "../../feautures/messages/messagesSlice";
+import React, { useState } from 'react';
+import { TextInput, Button, StyleSheet, View } from 'react-native';
 
-const InputBox = () => {
-  const [message, setMessage] = useState("");
-  const dispatch = useDispatch();
+const InputBox = ({ onSendMessage }) => {
+  const [message, setMessage] = useState('');
 
-  const sendMessage = () => {
-    if(message.length > 0) {
-        dispatch(addMessage({id: Date.now(), text: message}));
-        setMessage("");
+  const handleSend = () => {
+    if (message.trim()) {
+      onSendMessage({ id: Date.now(), text: message });  // Enviar mensaje con un ID único
+      setMessage('');  // Limpiar el campo de texto
     }
   };
 
   return (
     <View style={styles.container}>
-        <TextInput
-            value={message}
-            onChangeText={setMessage}
-            placeholder="Escribe un mensaje..."
-            style={styles.input}
-            onSubmitEditing={sendMessage}
-        />
-        <Button title="Enviar" onPress={sendMessage} color="#007BFF" />
+      <TextInput
+        style={styles.input}
+        placeholder="Escribe un mensaje..."
+        value={message}
+        onChangeText={setMessage}
+      />
+      <Button title="Enviar" onPress={handleSend} />
     </View>
-);
+  );
 };
 
 const styles = StyleSheet.create({
-container: {
+  container: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-},
-input: {
+  },
+  input: {
     flex: 1,
-    height: 40,
-    borderColor: '#ddd',
     borderWidth: 1,
-    borderRadius: 20,
-    paddingHorizontal: 15,
-    marginRight: 10,
-},
+    borderColor: '#ccc',
+    borderRadius: 4,
+    padding: 8,
+    marginRight: 8,
+  },
 });
 
 export default InputBox;

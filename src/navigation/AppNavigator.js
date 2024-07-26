@@ -11,6 +11,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 
 const Stack = createStackNavigator();
 
+
 const AppNavigator = () => {
   const user = useSelector((state) => state.user);
 
