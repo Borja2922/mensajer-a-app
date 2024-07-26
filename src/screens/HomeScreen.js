@@ -23,17 +23,10 @@ const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate('Profile')}
+                onPress={() => navigation.navigate('Perfil')}
             >
                 <Ionicons name="person-outline" size={24} color="white" />
                 <Text style={styles.buttonText}>Perfil</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('Settings')}
-            >
-                <Ionicons name="settings-outline" size={24} color="white" />
-                <Text style={styles.buttonText}>Configuración</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.button}
