@@ -4,21 +4,21 @@ import MessageBubble from "../components/Chat/MessageBubble";
 import InputBox from "../components/Chat/InputBox";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { setChatUsers, setCurrentChat } from "../feautures/chatUsers/chatUsersSlice";
+import { setChatUsers, setCurrentChat, updateLastMessage } from "../feautures/chatUsers/chatUsersSlice";
 import UsersItem from "../components/Chat/UsersItem";
 import { useRoute } from "@react-navigation/native";
 import { addMessage } from "../feautures/messages/messagesSlice";
 
 const ChatScreen = () => {
-  const messages = useSelector((state) => state.messages);
-  const chatUsers = useSelector((state) => state.chatUsers.chatUsers);
-  const currentChat = useSelector((state) => state.chatUsers.currentChat);
+  const dispatch = useDispatch();
   const route = useRoute();
   const { userId } = route.params || {};
-  const dispatch = useDispatch();
+
+  const messages = useSelector((state) => state.messages[userId] || []);
+  const chatUsers = useSelector((state) => state.chatUsers.chatUsers);
+  const currentChat = useSelector((state) => state.chatUsers.currentChat);
 
   useEffect(() => {
-    // Simulación de llamada a la API para obtener los usuarios
     const fetchUsers = async () => {
       const users = [
         { id: 1, name: "John", lastMessage: "Me llamo John", profileImage: "https://i.pravatar.cc/300" },
@@ -30,17 +30,19 @@ const ChatScreen = () => {
     fetchUsers();
   }, [dispatch]);
 
-  const handleSendMessage = (message) => {
-    // Simulación de llamada a la API para enviar el mensaje
-    dispatch(addMessage(message));
-  };
-
   useEffect(() => {
-    const selectedUser = chatUsers.find(user => user.id === userId);
-    if (selectedUser) {
-      dispatch(setCurrentChat(selectedUser));
+    if (userId && chatUsers.length > 0) {
+      const selectedUser = chatUsers.find(user => user.id === userId);
+      if (selectedUser) {
+        dispatch(setCurrentChat(selectedUser));
+      }
     }
   }, [userId, chatUsers, dispatch]);
+
+  const handleSendMessage = (message) => {
+    dispatch(addMessage({ userId, message }));
+    dispatch(updateLastMessage({ userId, message }));
+  };
 
   return (
     <View style={styles.container}>

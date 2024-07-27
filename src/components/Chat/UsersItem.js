@@ -1,16 +1,14 @@
 // src/components/Chat/UsersItem.js
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const UsersItem = ({ user }) => {
   const navigation = useNavigation();
+  console.log(user)
 
   return (
-    <TouchableOpacity
-      style={styles.userItem}
-      onPress={() => navigation.navigate('Chat', { userId: user.id })}
-    >
+    <TouchableOpacity style={styles.userItem} onPress={() => navigation.navigate('Chat', { userId: user.id })}>
       <Image source={{ uri: user.profileImage }} style={styles.profileImage} />
       <View style={styles.userInfo}>
         <Text style={styles.userName}>{user.name}</Text>
@@ -29,20 +27,20 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
   },
   profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
   userInfo: {
     marginLeft: 10,
   },
   userName: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   lastMessage: {
     fontSize: 14,
-    color: '#666',
+    color: '#777',
   },
 });
 

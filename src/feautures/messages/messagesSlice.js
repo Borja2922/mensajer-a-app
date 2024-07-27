@@ -10,8 +10,7 @@ const messagesSlice = createSlice({
       if (!state[userId]) {
         state[userId] = [];
       }
-      // Crear una copia del estado actual y agregar el nuevo mensaje
-      state[userId] = [...state[userId], message];
+      state[userId].push(message);
     },
     clearMessages: () => {
       return [];
