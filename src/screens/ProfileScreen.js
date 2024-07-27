@@ -13,15 +13,19 @@ const ProfileScreen = () => {
     const dispatch = useDispatch();
 
     const handleSave = () => {
-        dispatch(setUser);
-        dispatch(setUser({ ...user, username, description }));
+     if(!isEditing) {
+        setIsEditing(true);
+     } else {
+        dispatch(setUser({ ...user, username, description, profileImage }));
         setIsEditing(false);
+     }
+       
     };
 
     return (
         <View style={styles.container}>
           <View style={styles.card}>
-            <TouchableOpacity style={styles.editIcon} onPress={() => setIsEditing(!isEditing)}>
+            <TouchableOpacity style={styles.editIcon} onPress={() => handleSave()}>
               <Ionicons name={isEditing ? "checkmark-circle-outline" : "create-outline"} size={24} color="black" />
             </TouchableOpacity>
             <Image source={{ uri: user.profileImage || 'https://via.placeholder.com/150' }} style={styles.profileImage} />
